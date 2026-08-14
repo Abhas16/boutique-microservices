@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL:'https://github.com/Abhas16/boutique-microservices.git'
+    repoURL: 'https://github.com/Abhas16/boutique-microservices.git'
     targetRevision: main
     path: gitops
   destination:

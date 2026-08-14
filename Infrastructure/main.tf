@@ -1,19 +1,19 @@
 module "vpc" {
   source = "./modules/vpc"
 
-  vpc_name     = var.vpc_name
-  cidr_block   = var.vpc_cidr
-  subnet_cidrs = [for s in var.subnets : s.cidr_block]
+  vpc_name           = var.vpc_name
+  cidr_block         = var.vpc_cidr
+  subnet_cidrs       = [for s in var.subnets : s.cidr_block]
   availability_zones = [for s in var.subnets : s.availability_zone]
-  cluster_name     = var.cluster_name
+  cluster_name       = var.cluster_name
 }
 
 
 module "eks" {
   source = "./modules/eks"
 
-  cluster_name     = var.cluster_name
-  node_group_name  = var.node_group_name
+  cluster_name    = var.cluster_name
+  node_group_name = var.node_group_name
 
   instance_types = var.instance_types
   min_size       = var.min_size
@@ -45,7 +45,7 @@ provider "kubernetes" {
 provider "helm" {
   alias = "eks"
 
-  kubernetes =  {
+  kubernetes = {
     host                   = module.eks.cluster_endpoint
     cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
     token                  = data.aws_eks_cluster_auth.eks.token
